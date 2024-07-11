@@ -160,7 +160,7 @@ export class SelectorCompletionItemProvider implements CompletionItemProvider, D
   }
 
   async findWorkspace(uri: Uri, keys: Set<string>): Promise<void> {
-    const files = getCssByFolder(uri.toString());
+    const files = getCssByFolder(uri.fsPath);
     for (const key of files) {
       keys.add(await this.fetch(uri, key));
     }

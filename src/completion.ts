@@ -15,6 +15,7 @@ import {
 import { parse, walk } from 'css-tree';
 import fetch from 'node-fetch';
 import { basename, dirname, extname, isAbsolute, join } from 'path';
+import { getCssByFolder } from './findCss';
 
 export type Context = {
   ids: Map<string, CompletionItem>;
@@ -158,6 +159,13 @@ export class SelectorCompletionItemProvider implements CompletionItemProvider, D
     }
   }
 
+  async findWorkspace(uri: Uri, keys: Set<string>): Promise<void> {
+    const files = getCssByFolder(uri.toString());
+    for (const key of files) {
+      keys.add(await this.fetch(uri, key));
+    }
+  }
+
   async findLinks(uri: Uri, keys: Set<string>, text: string): Promise<void> {
     const findLinks = /<link([^>]+)>/gi;
 
@@ -216,6 +224,7 @@ export class SelectorCompletionItemProvider implements CompletionItemProvider, D
 
     await this.findFixed(Uri.parse(uri), keys);
     await this.findLinks(Uri.parse(uri), keys, text);
+    await this.findWorkspace(Uri.parse(workspace.cwd), keys);
     await this.findInherited(Uri.parse(uri), keys, text);
 
     const ids = new Map<string, CompletionItem>();

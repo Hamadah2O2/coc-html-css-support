@@ -1,14 +1,26 @@
 # coc-html-css-support
 
-> fork from a [ecmel/vscode-html-css](https://github.com/ecmel/vscode-html-css) | [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css)
+> fork from a [ecmel/vscode-html-css](https://github.com/ecmel/vscode-html-css) | [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css) | and the origin [yaegassy/coc-html-css-support](https://github.com/yaegassy/coc-html-css-support) 
 
-HTML id and class attribute "completion" for [coc.nvim](https://github.com/neoclide/coc.nvim).
+HTML id and class attribute "completion" for [coc.nvim](https://github.com/neoclide/coc.nvim). With on workspace css finding 
 
 <img width="780" alt="coc-html-css-support-demo" src="https://user-images.githubusercontent.com/188642/116341049-2b5c8880-a81b-11eb-959e-2d03edda61fd.gif">
 
 ## Install
 
-`:CocInstall coc-html-css-support`
+### Using Lazy
+```lua
+{
+  "Hamadah2O2/coc-html-css-support",
+  build = "yarn install --frozen-lockfile",
+  config = function()
+    vim.cmd([[autocmd BufWritePost *.css CocCommand html-css-support.dispose]]) -- Automate dispose html-css-support on css BufWritePost
+  end
+}
+```
+
+### Using CocInstall command
+`:CocInstall @hamadah2o2/coc-html-css-support`
 
 ## Features
 
@@ -17,6 +29,7 @@ HTML id and class attribute "completion" for [coc.nvim](https://github.com/neocl
 - Supports template inheritance.
 - Supports additional style sheets.
 - Supports other HTML like languages.
+- Supports style sheets finding on current working directory.
 - Command to make `html.customData` built-in in `coc-html-css-support` available at the workspace level.
   - Require [coc-html](https://github.com/neoclide/coc-html)
 
@@ -75,7 +88,8 @@ You can read more about customData in the following repositories.
 
 ## Thanks
 
-- [ecmel/vscode-html-css](https://github.com/ecmel/vscode-html-css) : The origin of this repository.
+- [yaegassy/coc-html-css-support](https://github.com/yaegassy/coc-html-css-support)
+- [ecmel/vscode-html-css](https://github.com/ecmel/vscode-html-css) : The origin of yaegassy/coc-html-css-support repository.
 
 ## License
 
